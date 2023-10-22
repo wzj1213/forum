@@ -1,14 +1,13 @@
-import './assets/main.css'
+import { createApp } from 'vue';
+// 统一仓库出口
+import pinia from '@/stores';
+import App from './App.vue';
+import router from './router';
+import '@/assets/main.scss';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+const app = createApp(App);
 
-import App from './App.vue'
-import router from './router'
-
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+// 使用pinia和以及pinia持久化
+app.use(pinia);
+app.use(router);
+app.mount('#app');
