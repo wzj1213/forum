@@ -24,7 +24,22 @@ pnpm install --save-dev @arco-design/web-vue
 }
 3.按需加载与组件库主题（Arco 插件）
 pnpm i @arco-plugins/vite-vue -D
+全局配置
+在引入 ArcoVue 时，可以传入一个全局配置对象。
 
+import { createApp } from 'vue'
+import ArcoVue from '@arco-design/web-vue';
+import App from './App.vue';
+import '@arco-design/web-vue/dist/arco.css';
+
+const app = createApp(App);
+app.use(ArcoVue, {
+  // 用于改变使用组件时的前缀名称
+  componentPrefix: 'arco'
+});
+app.mount('#app');
+导入组件
+组件库在 2.44.3 版本为了兼容 nuxt3 环境，增加 exports 配置。这个配置会对组件库的导入产生一定影响，使用中建议从 @arco-design/web-vue 和 @arco-design/web-vue/es/icon 导入组件库和图标。
 # element plus组件库
 可以和arco搭配
 自动导入配置
