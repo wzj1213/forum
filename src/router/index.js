@@ -8,7 +8,6 @@ const router = createRouter({
       name: 'Home',
       component: () => import('@/views/layout/HomeView.vue')
     }
-
   ]
 });
 
