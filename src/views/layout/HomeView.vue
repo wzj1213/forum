@@ -1,37 +1,92 @@
+<script setup>
+import { ref, reactive, onMounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const selectedKeys = reactive([1]);
+// 回调触发selectedKeys
+
+// const selectedKeys = ref([1]);
+const menuItem = ref([
+  {
+    id: 1,
+    name: '首页',
+    path: '/'
+  },
+  {
+    id: 2,
+    name: '论坛交流',
+    path: '/forum'
+  },
+  {
+    id: 3,
+    name: '系统资讯',
+    path: '/news'
+  },
+  {
+    id: 4,
+    name: '个人中心',
+    path: '/user'
+  },
+  {
+    id: 5,
+    name: '问题反馈',
+    path: '/feedback'
+  },
+  {
+    id: 6,
+    name: '后台管理',
+    path: '/admin'
+  }
+]);
+const go = (item) => {
+  router.push(item);
+};
+onMounted(() => {
+  const path = router.currentRoute.value.path;
+  const index = menuItem.value.findIndex((item) => item.path === path);
+  selectedKeys.value = [menuItem.value[index].id];
+});
+
+watch(
+  () => router.currentRoute.value.path,
+  (val) => {
+    const index = menuItem.value.findIndex((item) => item.path === val);
+    selectedKeys.value = [menuItem.value[index].id];
+  }
+);
+</script>
 <template>
   <a-layout class="layout">
     <a-layout-header>
       <div class="logo" />
       <a-menu
-        v-model:selectedKeys="selectedKeys"
+        v-model:selectedKeys="selectedKeys.value"
         theme="dark"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
+        <a-menu-item
+          @click="go(item.path)"
+          v-for="item in menuItem"
+          :key="item.id"
+        >
+          <div>{{ item.name }}</div>
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout-content style="padding: 0 50px">
-      <a-breadcrumb style="margin: 16px 0">
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item>List</a-breadcrumb-item>
-        <a-breadcrumb-item>App</a-breadcrumb-item>
-      </a-breadcrumb>
-      <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
-        Content
-      </div>
+      <!-- 交流推荐 -->
+
+      <router-view></router-view>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      Ant Design ©2018 Created by Ant UED
+      Created by WZJ
     </a-layout-footer>
   </a-layout>
 </template>
-<script setup>
-import { ref } from 'vue';
-const selectedKeys = ref(['2']);
-</script>
+
 <style scoped>
 .site-layout-content {
   min-height: 280px;
