@@ -43,6 +43,7 @@ app.mount('#app');
 # element plus组件库
 可以和arco搭配
 自动导入配置
+node 版本16
 pnpm add -D unplugin-vue-components unplugin-auto-import
 {
     // vite.config.ts
